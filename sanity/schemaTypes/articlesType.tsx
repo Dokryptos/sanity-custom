@@ -1,8 +1,8 @@
 import { BookIcon } from "@sanity/icons";
 import { orderRankOrdering } from "@sanity/orderable-document-list";
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity";
 
-export const authorType = defineType({
+export const articlesType = defineType({
   name: "articles",
   title: "Articles",
   type: "document",
