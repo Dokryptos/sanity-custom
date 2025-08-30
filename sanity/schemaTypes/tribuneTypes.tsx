@@ -1,26 +1,94 @@
-import {TagIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import { ArchiveIcon } from "@sanity/icons";
+import { orderRankOrdering } from "@sanity/orderable-document-list";
+import { defineField, defineType } from "sanity";
 
-export const categoryType = defineType({
-  name: 'category',
-  title: 'Category',
-  type: 'document',
-  icon: TagIcon,
+export const tribuneType = defineType({
+  name: "tribune",
+  title: "Tribunes",
+  type: "document",
+  icon: ArchiveIcon,
+  orderings: [orderRankOrdering],
   fields: [
     defineField({
-      name: 'title',
-      type: 'string',
+      name: "titre",
+      type: "string",
     }),
     defineField({
-      name: 'slug',
-      type: 'slug',
+      name: "slug",
+      type: "slug",
       options: {
-        source: 'title',
+        source: "titre",
+        maxLength: 200,
+        slugify: (input) =>
+          input.toLowerCase().replace(/\s+/g, "-").slice(0, 200),
+      },
+      validation: (rule) =>
+        rule.required().error(`Required to generate a page on the website`),
+      description: `The slug is the url path of the project, Can use Generate button but try to keep it clean Without ponctuation(, . ; : ! ?) and Without (&é"'(-è_çà)=) (Obligation)`,
+    }),
+    defineField({
+      name: "image",
+      type: "image",
+      options: {
+        hotspot: true,
       },
     }),
     defineField({
-      name: 'description',
-      type: 'text',
+      name: "Auteur",
+      title: "auteur",
+      type: "string",
+      validation: (rule) =>
+        rule.required().error(`Required to generate a page on the website`),
+      description: "l'auteur de la tribune est obligatoire (Obligation)",
+    }),
+    defineField({
+      name: "infoauteur",
+      title: "Infoauteur",
+      type: "text",
+      validation: (rule) =>
+        rule.required().error(`Required to generate a page on the website`),
+      description: "l'info auteur pour la tribune est obligatoire (Obligation)",
+    }),
+    defineField({
+      name: "tempsDeLecture",
+      title: "Temps de lecture",
+      type: "number",
+      validation: (rule) =>
+        rule.required().error(`Required to generate a page on the website`),
+      description:
+        "Temps de lecture pour la tribune est obligatoire (Obligation)",
+    }),
+    defineField({
+      name: "texte",
+      title: "Texte",
+      type: "text",
+      validation: (rule) =>
+        rule.required().error(`Required to generate a page on the website`),
+      description: "Le texte pour la tribune est obligatoire (Obligation)",
+    }),
+    defineField({
+      name: "chapeau",
+      title: "Chapeau",
+      type: "text",
+      description: "Le chapeau pour la tribune",
+    }),
+    defineField({
+      name: "citation",
+      title: "Citaton",
+      type: "text",
+      description: "La citation pour la tribune",
+    }),
+    defineField({
+      name: "intertitre",
+      title: "Intertitre",
+      type: "text",
+      description: "L'intertitre pour la tribune",
     }),
   ],
-})
+  preview: {
+    select: {
+      title: "name",
+      media: "image",
+    },
+  },
+});

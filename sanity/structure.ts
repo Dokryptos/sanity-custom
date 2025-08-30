@@ -9,6 +9,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("category").title("Categories"),
       S.documentTypeListItem("author").title("Authors"),
       S.documentTypeListItem("article").title("Articles"),
+      S.documentTypeListItem("tribunes").title("Tribunes"),
       S.divider(),
       ...S.documentTypeListItems().filter(
         (item) =>
