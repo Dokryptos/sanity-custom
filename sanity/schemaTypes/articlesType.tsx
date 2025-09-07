@@ -1,6 +1,6 @@
 import { BookIcon } from "@sanity/icons";
 import { orderRankOrdering } from "@sanity/orderable-document-list";
-import { defineField, defineType } from "sanity";
+import { defineField, defineType, defineArrayMember } from "sanity";
 
 export const articlesType = defineType({
   name: "articles",
@@ -27,12 +27,42 @@ export const articlesType = defineType({
       description: `The slug is the url path of the project, Can use Generate button but try to keep it clean Without ponctuation(, . ; : ! ?) and Without (&é"'(-è_çà)=) (Obligation)`,
     }),
     defineField({
-      name: "image",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
+      name: "gallery",
+      title: "gallery",
+      type: "array",
+      description:
+        "Select all the image you want to render, in Webp for keep the place on the CMS and keep the CMS available with the free version (Obligation) with 1 image",
+      validation: (rule) =>
+        rule.required().error(`Required to generate a page on the website`),
+      of: [
+        defineArrayMember({
+          type: "image",
+          name: "image",
+          options: {
+            hotspot: true,
+          },
+        }),
+      ],
     }),
+    defineField({
+      name: "gallery",
+      title: "gallery",
+      type: "array",
+      description:
+        "Select all the image you want to render, in Webp for keep the place on the CMS and keep the CMS available with the free version (Obligation) with 1 image",
+      validation: (rule) =>
+        rule.required().error(`Required to generate a page on the website`),
+      of: [
+        defineArrayMember({
+          type: "image",
+          name: "image",
+          options: {
+            hotspot: true,
+          },
+        }),
+      ],
+    }),
+
     defineField({
       name: "Auteur",
       title: "auteur",
