@@ -8,10 +8,20 @@
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --breakpoint-tablet: 640px;
+  --breakpoint-laptop: 1024px;
+  --breakpoint-desktop: 1440px;
+
+  --width-tablet: 640px;
+  --width-laptop: 1024px;
+  --width-desktop: 1440px;
+
+  --max-width-tablet: 640px;
+  --max-width-laptop: 1024px;
+  --max-width-desktop: 1440px;
+
+  --screen-pointer-fine: (pointer: fine);
+  --screen-pointer-coarse: (pointer: coarse);
 }
 
 @media (prefers-color-scheme: dark) {
