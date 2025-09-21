@@ -1,12 +1,19 @@
 "use client";
-import Grid from "@/components/ui/grid";
+
 import { useState } from "react";
 
-export default function ArticlePage() {
+export default function ArticlesPage() {
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [gallery, setGallery] = useState(""); // url(s) séparées par des virgules
+  const [auteur, setAuteur] = useState("");
+  const [Infoauteur, setInfoauteur] = useState("");
+  const [tempsDeLecture, setTempsDeLecture] = useState("");
+  const [texte, setTexte] = useState("");
+  const [chapeau, setChapeau] = useState("");
+  const [citation, setCitation] = useState("");
+  const [intertitre, setIntertitre] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,21 +23,35 @@ export default function ArticlePage() {
     try {
       const res = await fetch("/api/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title, content }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          gallery: gallery.split(",").map((g) => g.trim()),
+          auteur,
+          Infoauteur,
+          tempsDeLecture,
+          texte,
+          chapeau,
+          citation,
+          intertitre,
+        }),
       });
 
       if (res.ok) {
-        setMessage("✅ Merci ! Ton article est en attente de validation.");
+        setMessage("✅ Article envoyé, en attente de validation !");
         setTitle("");
-        setContent("");
+        setGallery("");
+        setAuteur("");
+        setInfoauteur("");
+        setTempsDeLecture("");
+        setTexte("");
+        setChapeau("");
+        setCitation("");
+        setIntertitre("");
       } else {
         const err = await res.json();
         setMessage("❌ Erreur: " + err.error);
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setMessage("❌ Erreur réseau: " + error.message);
     } finally {
@@ -39,41 +60,87 @@ export default function ArticlePage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Soumettre un article</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <h1 className="text-2xl font-bold mb-6">Soumettre un article</h1>
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-4 bg-white shadow p-4 rounded"
+        className="flex flex-col gap-3 w-full max-w-md"
       >
         <input
           type="text"
-          placeholder="Titre de l'article"
+          placeholder="Titre"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          className="border p-2 rounded"
           required
-          className="w-full border border-gray-300 p-2 rounded"
         />
-
+        <input
+          type="text"
+          placeholder="Galerie (URL séparées par virgule)"
+          value={gallery}
+          onChange={(e) => setGallery(e.target.value)}
+          className="border p-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="Auteur"
+          value={auteur}
+          onChange={(e) => setAuteur(e.target.value)}
+          className="border p-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="Info Auteur"
+          value={Infoauteur}
+          onChange={(e) => setInfoauteur(e.target.value)}
+          className="border p-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="Temps de lecture"
+          value={tempsDeLecture}
+          onChange={(e) => setTempsDeLecture(e.target.value)}
+          className="border p-2 rounded"
+        />
         <textarea
-          placeholder="Contenu..."
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
+          placeholder="Texte"
+          value={texte}
+          onChange={(e) => setTexte(e.target.value)}
+          className="border p-2 rounded"
           required
-          rows={6}
-          className="w-full border border-gray-300 p-2 rounded"
+        />
+        <textarea
+          placeholder="Chapeau"
+          value={chapeau}
+          onChange={(e) => setChapeau(e.target.value)}
+          className="border p-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="Citation"
+          value={citation}
+          onChange={(e) => setCitation(e.target.value)}
+          className="border p-2 rounded"
+        />
+        <input
+          type="text"
+          placeholder="Intertitre"
+          value={intertitre}
+          onChange={(e) => setIntertitre(e.target.value)}
+          className="border p-2 rounded"
         />
 
         <button
           type="submit"
           disabled={loading}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
         >
           {loading ? "Envoi..." : "Envoyer"}
         </button>
       </form>
 
-      {message && <p className="mt-4">{message}</p>}
+      {message && <p className="mt-4 text-center">{message}</p>}
     </div>
   );
 }
