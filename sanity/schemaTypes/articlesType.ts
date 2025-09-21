@@ -45,25 +45,6 @@ export const articlesType = defineType({
       ],
     }),
     defineField({
-      name: "gallery",
-      title: "gallery",
-      type: "array",
-      description:
-        "Select all the image you want to render, in Webp for keep the place on the CMS and keep the CMS available with the free version (Obligation) with 1 image",
-      validation: (rule) =>
-        rule.required().error(`Required to generate a page on the website`),
-      of: [
-        defineArrayMember({
-          type: "image",
-          name: "image",
-          options: {
-            hotspot: true,
-          },
-        }),
-      ],
-    }),
-
-    defineField({
       name: "Auteur",
       title: "auteur",
       type: "string",

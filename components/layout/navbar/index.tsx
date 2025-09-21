@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import NavbarMarquee from "./marquee";
+
 export default function LayoutNavbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -101,9 +102,9 @@ export default function LayoutNavbar() {
     <>
       <nav
         role="navigation"
-        className="fixed inset-0 bg-white z-50 h-10 tablet:h-14 shadow-md select-none w-full"
+        className="fixed bg-white z-50 h-10 tablet:h-14 select-none w-full border-black"
       >
-        <Grid className="flex flex-col justify-center">
+        <Grid className="flex-col justify-center">
           <div className="laptop:col-start-1 laptop:col-span-6 tablet:col-span-2">
             <button
               type="button"
@@ -146,7 +147,7 @@ export default function LayoutNavbar() {
                   >
                     <Link href="/">Accueil</Link>
                     {menuData.map((item, i) => (
-                      <li key={i} className="block p-5 border-b">
+                      <li key={i}>
                         <div
                           onClick={() =>
                             setOpenIndex(openIndex === i ? null : i)
@@ -183,11 +184,10 @@ export default function LayoutNavbar() {
                                   animate={{ opacity: 1, y: 0 }}
                                   transition={{ delay: j * 0.01 }}
                                 >
-                                  <Link
-                                    href={subItem.href}
-                                    className="block hover:underline"
-                                  >
-                                    {subItem.label}
+                                  <Link href={subItem.href}>
+                                    <p className="hover:opacity-60 duration-400 transition-transform ease-in-out">
+                                      {subItem.label}
+                                    </p>
                                   </Link>
                                 </motion.li>
                               ))}

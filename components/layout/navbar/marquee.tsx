@@ -17,7 +17,7 @@ export default function NavbarMarquee({ menuData }: NavbarMarqueeProps) {
   return (
     <div
       role="navigation"
-      className="w-full fixed flex top-10 tablet:top-14 z-40 bg-white shadow-md select-none gap-10 "
+      className="w-full fixed flex top-10 tablet:top-14 z-40 bg-white shadow-md select-none gap-10 overflow-x-auto whitespace-nowrap pl-5"
     >
       {menuData.map((menuTitle, index) => (
         <div key={index}>
@@ -25,7 +25,7 @@ export default function NavbarMarquee({ menuData }: NavbarMarqueeProps) {
             className="text-center font-medium text-sm "
             href={menuTitle.href || "#"}
           >
-            <p className="hover:opacity-15 duration-400 transition-transform ease-in-out p-10">
+            <p className="hover:opacity-60 duration-400 transition-transform ease-in-out">
               {menuTitle.label}
             </p>
           </Link>
